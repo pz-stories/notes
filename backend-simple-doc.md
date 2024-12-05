@@ -66,11 +66,7 @@ example response
 <-202
 ```json
 {
-	"next-challenge": "2fa.code",
-	"args": {
-		"method": "email",
-		"key": "rand-hex"
-	}
+	"ok": true,
 }
 ```
 ## Несколько способов
