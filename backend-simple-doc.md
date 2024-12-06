@@ -1,5 +1,5 @@
 # Структура
-`HTTP_METHOD ENDPOINT`
+`HTTP_METHOD API_ENDPOINT`
 ```
 example body
 ```
@@ -67,6 +67,13 @@ example response
 ```json
 {
 	"ok": true,
+	"result": {
+		"next-challenge": "2fa:code",
+		"args": {
+			"method": "email",
+			"key": "rand-hex"
+		}
+	}
 }
 ```
 ## Несколько способов
@@ -75,7 +82,7 @@ example response
 {
 	"ok": true,
 	"result": {
-		"next-challenge": "2fa.method",
+		"next-challenge": "2fa:method",
 		"args": {
 			"methods": [
 					"email",
@@ -84,10 +91,12 @@ example response
 			],
 			"key": "rand-hex"
 		}
+	},
+	meta: {
+		"next": "2fa:code"
 	}
 }
 ```
-
 ### Ответ серверу
 `POST /v1/auth/2fa/use/{method}`
 ```
@@ -99,14 +108,17 @@ Headers:
 {
 	"ok": true,
 	"result": {
-		"method": "email",
-		"timeout": "5m",
+		"next-challenge": "2fa:code",
+		"args": {
+			"method": "totp",
+			"key": "rand-hex"
+		}
 	}
 }
 ```
 
 ## Ответ серверу
-`POST /v1/auth/2fa/{method}`
+`POST /v1/auth/2fa/{method}/verify`
 ```
 Headers:
 	Authorization: Bearer {token}
@@ -125,3 +137,15 @@ Headers:
 }
 ```
 
+
+# Установка 2ФА
+`POST /v1/account/2fa/{method}`
+<-202
+```json
+{
+	"ok": true,
+	"result": {
+		"base-code": 
+	}
+}
+```
