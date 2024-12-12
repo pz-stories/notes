@@ -41,37 +41,6 @@ Backend:
 
 # Архитектура
 ```
-                                       [Punishment Worker] <-------+
-                                                                   |
-                                                                   |
-     [ GameServerManager ] <---(GRPC)--->   [API GATEWAY ]         |
-         |        |                     +-------------------+      |
-         |        |                     | AccountsDB        |      |
-         ↓        |                     | CharactersDB      |      |
-      [ LGSM ]  (RCON)                  | PunishmentDB      | <----+ 
-         |        |                     | PunishmentHistory |
-         |        |                     +-------------------+ 
-         ↓        ↓                               ↑
-[Project Zomboid Server]                          |
-         ↑                                        |
-         |                                        |
-		 |				  +-----------------------+  
-		 |				  |	
-		 |		    ( HTTP / WS )           
-		 |		       	  ↓                 
-+--------|------------------------------------------+
-|        |                                          |
-|	  [ Mod ]----> [GameAPIServer]                  |
-|				   /      |      \                  |
-|				  /       |       \                 |
-| PunishmentsMonitor   Characters   ServerStateInfo |
-|                                                   |
-+---------------------------------------------------+
-	|
-1234
-```
-
-```
   
                                        [Punishment Worker] <-------+  
                                                                    |  
