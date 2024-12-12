@@ -41,25 +41,25 @@ Backend:
 
 # Архитектура
 ```
-                                   +-> [Punishment Worker] <-------+
-                                   |                               |
-                                   |                               |
-                                   |        [ API GATEWAY ]        |
-                                   |    +-------------------+      |
-                                   |    | AccountsDB        |      |
- [GameServerManager] <-----(GRPC)-----> | CharactersDB      |      |
-         |                         |    | PunishmentDB      | <----+ 
-      [ LGSM ]                     +----| PunishmentHistory |
-         |                         |    +-------------------+
-[Project Zomboid Server]<--(RCON)--+              ↑
+                                       [Punishment Worker] <-------+
+                                                                   |
+                                                                   |
+     [ GameServerManager ] <---(GRPC)--->   [API GATEWAY ]         |
+         |        |                     +-------------------+      |
+         |        |                     | AccountsDB        |      |
+         ↓        |                     | CharactersDB      |      |
+      [ LGSM ]  (RCON)                  | PunishmentDB      | <----+ 
+         |        |                     | PunishmentHistory |
+         |        |                     +-------------------+ 
+         ↓        ↓                               ↑
+[Project Zomboid Server]                          |
          ↑                                        |
          |                                        |
 		 |				  +-----------------------+  
 		 |				  |	
-		 |				  |
 		 |		    ( HTTP / WS )           
-		 |		       	  |                 
-+--------|----------------+-------------------------+
+		 |		       	  ↓                 
++--------|------------------------------------------+
 |        |                                          |
 |	  [ Mod ]----> [GameAPIServer]                  |
 |				   /      |      \                  |
