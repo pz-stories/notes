@@ -41,25 +41,37 @@ result: список {
 - Никнейм
 
 ## Страница персонажа
+При запросе данных о игроке получаем ответ типа `Character`
 
 ```python
+# @dataclass - игнорируй, ничего не значит
+# класс - описание структуры
+# поле: тип
+# str - строка, int - число, float - дробь, None - ничего (null)
+# datetime - время (будет в виде строки на самом деле)
+# list[str] - массив строк
+# Тип | Тип2 - Один из типо (Или)
+
+
 @dataclass  
 class Character:  
     id: int  
     username: str  
     account_id: int  
-  
+	# Здесь будет тип GameCharacterInfo или DeadCharacterInfo
     game_info: BaseCharacterInfo | None
 
 class BaseCharacterInfo(ABC):  
     full_name: str  
-    display_name: str  
+    display_name: str  # Возвможно уйдет в будуем
     access_level: AccessLevel  
     last_connection: datetime | None  
   
   
 @dataclass(frozen=True)  
 class GameCharacterInfo(BaseCharacterInfo):  
+	"""Информация о живом персонаже"""
+	
     full_name: str  
     display_name: str  
     access_level: AccessLevel  
@@ -71,6 +83,7 @@ class GameCharacterInfo(BaseCharacterInfo):
   
 @dataclass  
 class DeadCharacterInfo(BaseCharacterInfo):  
+	"""Информация о мертвом персонаже"""
     full_name: str  
     display_name: str  
     access_level: AccessLevel  
@@ -80,6 +93,7 @@ class DeadCharacterInfo(BaseCharacterInfo):
   
 @dataclass(frozen=True)  
 class CharacterStats:  
+	"""Статистика персонажа"""
     weight: float  
     health: float  
     zombie_kills: int  
@@ -91,13 +105,20 @@ class CharacterStats:
 
 @dataclass(frozen=True)  
 class Faction:  
+	"""
+	Фракция
+	"""
     name: str  
     owner: str  
     tag: str  
 
 
+
 class AccessLevel(StrEnum):  
-    PLAYER = "player"  
+	"""
+	Это просто перечисление уровней доступа чтобы было удобнее
+	"""
+	PLAYER = "player"  
     OVERSEER = "overseer"  
     OBSERVER = "observer"  
     MODERATOR = "moderator"  
