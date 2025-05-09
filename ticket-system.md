@@ -89,10 +89,68 @@
 > 
 > Если нажата кнопка BTN_1 -> Отобразить поле FIELD_1
 
-Пример поля:
+Примеры полей:
 ```json
 {
-	"id": ""
+	"id": "BUG_TARGET_SYSTEM",
+	"type": "checkbox",
+	"name": "Какие аспекты затронул баг",
+	"suggest": "Выберите что затронул баг",
+	"required": false,
+	"options": {
+		"items": [
+			"Личный кабинет",
+			"Донат",
+			"Управление персонажем",
+			"Панель управления сервером",
+			"Игровой процесс",
+			"Запуск игры"
+		]
+	}
+}
+```
+
+```json
+{
+	"id": "TARGET_ADMIN",
+	"type": "select_character",
+	"name": "Выберите на какого админа пишете жалобу",
+	"required": true,
+	"options": {
+		"character_filters": [
+			"admin",
+		]
+	}
+}
+```
+
+```json
+{
+	"id": "CRIMINALS_CHARACTERS",
+	"type": "select_many_characters",
+	"name": "Выберите ваших обидчиков",
+	"options": {
+		"characters_filters": [
+			"!own",
+			"live",
+			"!admin"
+		],
+		"allow_username_if_not_found": true,
+	},
+	"triggers": {
+		// Триггеры при просмотре
+		"on_view": [
+			{
+				// Только для админов
+				"target": "admin",
+				// Действие
+				"action": "SUGGEST_INVITE_USERS_BY_CHARACTERS",
+				
+				// Только когда указан хотя бы один персонаж
+				"when": "not-empty"
+			}
+		]
+	}
 }
 ```
 ## Плюсы
