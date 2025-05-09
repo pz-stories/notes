@@ -70,3 +70,16 @@ Cookie: ticket:fdhdjdj.djdkdsk
 	} 
 }
 ```
+
+
+```python
+
+MFA = {
+	   before,
+	   between,
+}
+
+MFA.before
+
+
+```
